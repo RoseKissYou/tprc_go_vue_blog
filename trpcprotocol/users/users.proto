@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+// trpc create --protofile=./users/users.proto -o users --rpconly --mock=false
+package trpc.tprc_go_vue_blog.users;
+// 引入公共的proto
+import "common/common.proto";
+
+// 注意：这里go_package指定的是协议生成文件pb.go在git上的地址，不要和上面的服务的git仓库地址一样
+option go_package = "github.com/tprc_go_vue_blog/trpcprotocol/users";
+
+// 定义服务接口
+service AccessAuth {
+    // 获取用户信息列表
+    rpc GetUsersList(GetUsersListRequest) returns (GetUsersListReply);
+}
+
+// 定义 获取用户信息列表-请求参数
+message GetUsersListRequest {
+    common.Page     page             = 1;  // 分页参数
+}
+
+// 定义 获取用户信息列表-返回数据格式
+message GetUsersListReply {
+    repeated UserInfo user = 1; // 复用单个用户信息结构
+
+}
+
+// 定义单个用户信息结构
+message UserInfo {
+    string  Name    = 1;  // 用户名字
+    int32   Age     = 2;  // 用户年龄
+}

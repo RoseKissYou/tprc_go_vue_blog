@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+// package内容格式推荐为trpc.{app}.{server}，以trpc为固定前缀，标识这是一个trpc服务协议，app为你的应用名，server为你的服务进程名
+// trpc create --protofile=./common/common.proto -o common --rpconly --mock=false
+package trpc.tprc_go_vue_blog.common;
+
+// 注意：这里go_package指定的是协议生成文件pb.go在git上的地址，不要和上面的服务的git仓库地址一样
+option go_package = "github.com/tprc_go_vue_blog/trpcprotocol/common";
+
+
+// 分页参数
+message Page{
+  int32 page_index = 1;
+  int32 page_size  = 2;
+}
+
+message PageReply{
+  int32 page_index = 1;
+  int32 page_size  = 2;
+  int32 total  = 3;
+}
+
+// 排序参数
+message Order{
+  string data = 1; // 排序字段，如“cost”
+  int32  type = 2; // 是否升序，1-升序，2-降序
+}
+
+// 空请求
+message EmptyReq{
+}
+
+// 通用返回结果
+message CommonRsp{
+  int32  code    = 1;
+  string message = 2;
+}
+
+// 空请求
+message CommonResponse{
+  bool data = 1;
+}
